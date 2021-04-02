@@ -1,19 +1,40 @@
 plugins {
-    id 'java'
+	id 'org.springframework.boot' version '2.4.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
 }
 
-group 'org.gradlebeginner'
-version '1.0-SNAPSHOT'
+group = 'com.gradleBeginner'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
+}
+
+ext {
+	set('testcontainersVersion', "1.15.2")
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-jersey'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'org.springframework.session:spring-session-core'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:kafka'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+	}
 }
 
 test {
-    useJUnitPlatform()
+	useJUnitPlatform()
 }
